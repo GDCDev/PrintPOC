@@ -43,6 +43,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 			var oInput = this.byId("styleInput");
 			oParams["styleId"] = oInput.getValue();
 			this.getOwnerComponent().getRouter().navTo("Screen2View", oParams);
+			
+			
 			//this._oRouter.navTo("Screen2View", {
 			//	styleId: encodeURIComponent(oEvent.getSource().getBindingContext().getProperty("styleInput"))
 			//}, false);
