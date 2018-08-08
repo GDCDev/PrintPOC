@@ -131,6 +131,13 @@
 					"target": [
 						"Screen6View"
 					]
+				},
+				{
+					"name": "Screen4View_binded",
+					"pattern": "Screen4View/{EAN}",
+					"target": [
+						"Screen4View"
+					]
 				}
 			],
 			"targets": {
@@ -178,6 +185,12 @@
 				"Screen6View": {
 					"viewType": "XML",
 					"viewName": "Screen6View"
+				}
+			},
+			"additionalData": {
+				"sap.m.PrintPOC.view.Screen4View": {
+					"routeName": "Screen4View_binded",
+					"entitySet": "/eanSet"
 				}
 			}
 		}
