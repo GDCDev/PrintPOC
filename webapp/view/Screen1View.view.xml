@@ -1,0 +1,29 @@
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="sap.m.PrintPOC.controller.Screen1View" displayBlock="true">
+	<App id="idAppControl">
+		<pages><Page title="{i18n>title}">
+				<content>
+				    <VBox width="100%" direction="Column" id="vbox0">
+				        <items>
+				            <Label text="{i18n>style}" width="100%" id="label0"/>
+				        </items>
+				    </VBox>
+				    <VBox width="100%" direction="Column" id="vbox1">
+				        <items>
+				            <Input width="100%" id="styleInput"/>
+				        </items>
+				    </VBox>
+				</content>
+			<footer>
+			    <Toolbar width="100%" id="toolbar1">
+			        <content>
+			            <Button xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" text="{i18n>scan}" width="80px" id="btnScan" type="Accept" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen3View'\}\}\}"/>
+			            <Button text="{i18n>multiScan}" width="120px" id="btnMultiScan" type="Accept"/>
+			            <Button xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" text="{i18n>go}" width="80px" id="btnGo" type="Emphasized" press="onGoPressed"/>
+			            <Button xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" text="{i18n>cancel}" width="80px" id="btnCancel" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen6View'\}\}\}"/>
+			        </content>
+			    </Toolbar>
+			</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

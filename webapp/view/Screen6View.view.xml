@@ -1,0 +1,38 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="sap.m.PrintPOC.controller.Screen6View" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<App>
+		<pages>
+			<Page title="{i18n>title}" showNavButton="true">
+				<content>
+					<Table noDataText="Drop column list items here and columns in the area above" items="{path:'/eanSet',parameters:{select:'Style,EAN'}}" id="table0">
+				    
+				        <items>
+				            <ColumnListItem type="Active" id="item10" counter="0">
+				                <cells>
+				                    <Text text="{EAN}" id="text2"/>
+				                    
+				                </cells>
+				            </ColumnListItem>
+				        </items>
+				        
+				        <columns>
+				            <Column id="column0">
+				                <header>
+				                    <Label text="EAN" id="label10"/>
+				                </header>
+				            </Column>
+				         </columns>
+				         
+				     </Table>
+				</content>
+				<footer>
+				    <Bar class="sapContrast sapContrastPlus" id="bar0">
+				        
+					    <contentRight>
+					        <Button xmlns="sap.m" text="{i18n>cancel}" width="100px" id="button0" press="action" xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen1View'\}\}\}"/>
+					    </contentRight>
+				    </Bar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
