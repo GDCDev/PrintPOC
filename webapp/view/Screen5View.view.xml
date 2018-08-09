@@ -1,0 +1,19 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="sap.m.PrintPOC.controller.Screen5View"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" title="{i18n>title}" 
+			showNavButton="true" navButtonPress="action" 
+			action:wiring="\{'navButtonPress':\{'navigation':\{'routeName':'Screen1View'\}\}\}">
+				<content/>
+			<footer>
+			    <Bar id="bar0">
+			        <contentRight>
+			            <Button text="{i18n>cancel}" width="100px" id="btnCancel" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen1View'\}\}\}"/>
+			        </contentRight>
+			    </Bar>
+			</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

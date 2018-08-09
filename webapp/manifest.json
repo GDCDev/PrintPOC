@@ -127,7 +127,7 @@
 				},
 				{
 					"name": "Screen6View",
-					"pattern": "Screen6View",
+					"pattern": "Screen6View/:barcodes:",
 					"target": [
 						"Screen6View"
 					]
@@ -137,6 +137,13 @@
 					"pattern": "Screen4View/{EAN}",
 					"target": [
 						"Screen4View"
+					]
+				},
+				{
+					"name": "Screen5View",
+					"pattern": "Screen5View",
+					"target": [
+						"Screen5View"
 					]
 				}
 			],
@@ -184,7 +191,17 @@
 				},
 				"Screen6View": {
 					"viewType": "XML",
-					"viewName": "Screen6View"
+					"viewName": "Screen6View",
+					"routerClass": "sap.m.routing.Router",
+					"async": true,
+					"viewPath": "sap.m.PrintPOC.view",
+					"controlAggregation": "pages",
+					"controlId": "idAppControl",
+					"clearControlAggregation": false
+				},
+				"Screen5View": {
+					"viewType": "XML",
+					"viewName": "Screen5View"
 				}
 			},
 			"additionalData": {

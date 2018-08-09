@@ -11,20 +11,20 @@
 				        </items>
 				    </VBox>
 				    <List id="poList" modeAnimationOn="false" items="{path:'/eanSet'}">
-					<ObjectListItem type="Active" title="{EAN}" number="{Netprice}" numberUnit="{Currency}">
-				        <attributes>
-				            <ObjectAttribute text="{i18n>color}: {Colour}" id="color"/>
-				            <ObjectAttribute text="{i18n>size}: {Size}" id="size"/>
-				        </attributes>
-				        <!--
-				        <firstStatus>
-				            <ObjectStatus text="first status text" id="status0"/>
-				        </firstStatus>
-				        <secondStatus>
-				            <ObjectStatus text="second status text" id="status1"/>
-				        </secondStatus>
-				        -->
-				     </ObjectListItem>
+						<ObjectListItem type="Active" title="{EAN}" number="{Netprice}" numberUnit="{Currency}">
+					        <attributes>
+					            <ObjectAttribute text="{i18n>color}: {Colour}" id="color"/>
+					            <ObjectAttribute text="{i18n>size}: {Size}" id="size"/>
+					        </attributes>
+					        <!--
+					        <firstStatus>
+					            <ObjectStatus text="first status text" id="status0"/>
+					        </firstStatus>
+					        <secondStatus>
+					            <ObjectStatus text="second status text" id="status1"/>
+					        </secondStatus>
+					        -->
+					     </ObjectListItem>
 				     </List>
 				</content>
 			<footer>
