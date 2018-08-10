@@ -48,6 +48,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				//styleCtrl.bindProperty("text", "/eanSet('xxxxx')/Style");
 			}
 		},
+		
+		onLineItemPressed: function(oEvent) {
+			this.getOwnerComponent().getRouter().navTo("Screen4View", {
+				ean: encodeURIComponent(oEvent.getSource().getBindingContext().getProperty("EAN"))
+			}, false);
+		},
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
 		 * (NOT before the first rendering! onInit() is used for that one!).

@@ -7,33 +7,31 @@
 					
 					<VBox width="100%" direction="Column" id="vbox0">
 				        <items>
-				            <Label width="100%" id="style" class="labelStyle"/>
+				            <Label  width="100%" id="style" class="labelStyle"/>
 				        </items>
 				    </VBox>
 				    <List id="poList" modeAnimationOn="false" items="{path:'/eanSet'}">
-						<ObjectListItem type="Active" title="{EAN}" number="{Netprice}" numberUnit="{Currency}">
-					        <attributes>
-					            <ObjectAttribute text="{i18n>color}: {Colour}" id="color"/>
-					            <ObjectAttribute text="{i18n>size}: {Size}" id="size"/>
-					        </attributes>
-					        <!--
-					        <firstStatus>
-					            <ObjectStatus text="first status text" id="status0"/>
-					        </firstStatus>
-					        <secondStatus>
-					            <ObjectStatus text="second status text" id="status1"/>
-					        </secondStatus>
-					        -->
-					     </ObjectListItem>
+					<ObjectListItem type="Active" title="{EAN}" number="{Netprice}" numberUnit="{Currency}" press="onLineItemPressed">
+				        <attributes>
+				            <ObjectAttribute text="{i18n>color}: {Colour}" id="color"/>
+				            <ObjectAttribute text="{i18n>size}: {Size}" id="size"/>
+				        </attributes>
+				        <!--
+				        <firstStatus>
+				            <ObjectStatus text="first status text" id="status0"/>
+				        </firstStatus>
+				        <secondStatus>
+				            <ObjectStatus text="second status text" id="status1"/>
+				        </secondStatus>
+				        -->
+				     </ObjectListItem>
 				     </List>
 				</content>
 			<footer>
 			    <Bar class="sapContrast sapContrastPlus" id="bar0">
 			        <contentMiddle>
-			            <Button text="{i18n>printList}" width="100px" id="button0" type="Emphasized" press="PrintEANList"/>
+			            <Button text="{i18n>printList}" width="100px" id="button0" type="Emphasized"/>
 			        </contentMiddle>
-			    <contentRight><Button text="TestScreen4" width="100px" id="button0_1533716853474" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen4View'\}\}\}"/>
-			    </contentRight>
 			    </Bar>
 			</footer>
 			

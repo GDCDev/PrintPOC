@@ -1,7 +1,43 @@
 sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 	"use strict";
 	return Controller.extend("sap.m.PrintPOC.controller.Screen4View", {
-		
+		onInit: function() {
+			// Get Context Path for S3 Screen
+			var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.getRoute("Screen4View").attachPatternMatched(this._onRouteMatched, this);
+			
+		},
+
+		_onRouteMatched: function(oEvent) {
+			//var oViewModel = this.getModel("detailView");
+
+			// Build binding context path from URL parameters: the URL contains the product ID in parameter 'productId'.
+			// The path pattern is: /Products('<productId>')
+
+			this._sEan = decodeURIComponent(oEvent.getParameter("arguments").ean);
+
+			
+			this._sPath = this.getView().getModel().createKey("/eanSet", {
+				EAN: this._sEan
+			});
+
+			var oDetail = this.byId("detail");
+			if (oDetail) {
+				oDetail.bindElement({ path: this._sPath });
+			}
+			
+		},
+
+		onNavBack: function(oEvent) {
+			var oHistory = sap.ui.core.routing.History.getInstance();
+			var	sPreviousHash = oHistory.getPreviousHash();
+			//this.byId("page").destroyContent();
+			if (sPreviousHash !== undefined) {
+				history.go(-1);
+			} else {
+				this.getOwnerComponent().getRouter().navTo("Screen1View");
+			}
+		},
 		/**
 		 *@memberOf sap.m.PrintPOC.controller.Screen4View
 		 */

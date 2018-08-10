@@ -120,7 +120,7 @@
 				},
 				{
 					"name": "Screen4View",
-					"pattern": "Screen4View",
+					"pattern": "Screen4View/{ean}",
 					"target": [
 						"Screen4View"
 					]
@@ -130,13 +130,6 @@
 					"pattern": "Screen6View/:barcodes:",
 					"target": [
 						"Screen6View"
-					]
-				},
-				{
-					"name": "Screen4View_binded",
-					"pattern": "Screen4View/{EAN}",
-					"target": [
-						"Screen4View"
 					]
 				},
 				{
@@ -203,13 +196,8 @@
 					"viewType": "XML",
 					"viewName": "Screen5View"
 				}
-			},
-			"additionalData": {
-				"sap.m.PrintPOC.view.Screen4View": {
-					"routeName": "Screen4View_binded",
-					"entitySet": "/eanSet"
-				}
 			}
+			
 		}
 	},
 	"sap.platform.hcp": {
