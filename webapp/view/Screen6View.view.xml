@@ -4,8 +4,7 @@
 			<Page title="{i18n>title}" showNavButton="true">
 				<content>
 				     <List id="barcodeList" items="{/listData}">
-						<StandardListItem
-							title="{Code}"/>
+						<StandardListItem title="{Code}"/>
 					</List>
 				</content>
 				<footer>
@@ -13,7 +12,7 @@
 					    <contentRight>
 					        <Button xmlns="sap.m" text="{i18n>cancel}" width="100px" id="button0" press="action" xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen1View'\}\}\}"/>
 					    </contentRight>
-				    </Bar>
+				    </Bar>	
 				</footer>
 			</Page>
 		</pages>

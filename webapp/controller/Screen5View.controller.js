@@ -39,6 +39,8 @@ sap.ui.define([
 					function (result) 
 					{
 						if(result.cancelled){
+							//test
+							that.barcodes.push("123");
 							//navto 
 							if(that.barcodes.length==0)
 								that.getOwnerComponent().getRouter().navTo("Screen1View");
