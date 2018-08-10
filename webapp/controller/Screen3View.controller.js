@@ -73,7 +73,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/ui/core/UIComponent","sap/m/Mes
         _onAfterRendering: function (oEvent) {
             	//only async call works even though 1ms
 	            var interval = jQuery.sap.intervalCall(5, this, function(){
-	                    this._scan(this);
+	            		if(cordova){
+	                    	this._scan(this);
+	            		}
 	                    jQuery.sap.clearIntervalCall(interval);
 	                });
             },

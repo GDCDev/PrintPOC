@@ -60,6 +60,7 @@ sap.ui.define([
 						else{
 							if(!that.barcodes.contains(result.text))
 								that.barcodes.push(result.text);
+							//i18n
 							MessageToast.show("Scanned a new barcode:\n"+result.text,{duration: 2000});
 						}
 					},
@@ -86,7 +87,9 @@ sap.ui.define([
         _onAfterRendering: function (oEvent) {
             	//only async call works even though 1ms
 	            var interval = jQuery.sap.intervalCall(5, this, function(){
-	                    this._scan(this);
+	            		if(cordova){
+	                    	this._scan(this);
+	            		}
 	                    jQuery.sap.clearIntervalCall(interval);
 	                });
             },

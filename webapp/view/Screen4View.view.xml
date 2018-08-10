@@ -5,23 +5,24 @@
 			<footer>
 				    <Bar class="sapContrast sapContrastPlus" id="bar0">
 				        <contentMiddle>
-				            <Button text="{i18n>printLabel}" width="100px" id="button0" type="Emphasized"/>
+				            <Button text="{i18n>printLabel}" width="100px" id="button0" type="Emphasized" press="printLabel"/>
 				        </contentMiddle>
 				    </Bar>
 				</footer>
 			<content>
-				<Panel id="detail" backgroundDesign="Solid" >
-				    <DisplayListItem label="EAN" value="{EAN}" id="item1"/>
-				    <DisplayListItem label="Style" value="{Style}" id="item2"/>
-				    <DisplayListItem label="" value="{Description}" id="item3"/>
-				    <DisplayListItem label="Season" value="{Season}" id="item4"/>
-				    <DisplayListItem label="Division" value="{Division}" id="item5"/>
-				    <DisplayListItem label="Color" value="{Colour}" id="item6"/>
-				    <DisplayListItem label="Size" value="{Size}" id="item7"/>
+				<Panel id="detail" backgroundDesign="Solid">
+				    <DisplayListItem label="EAN" value="{EAN}" id="lblEAN"/>
+				    <DisplayListItem label="Style" value="{Style}" id="lblStyle"/>
+				    <DisplayListItem label="" value="{Description}" id="lblDescription"/>
+				    <DisplayListItem label="Season" value="{Season}" id="lblSeason"/>
+				    <DisplayListItem label="Division" value="{Division}" id="lblDivision"/>
+				    <DisplayListItem label="Color" value="{Colour}" id="lblColor"/>
+				    <DisplayListItem label="Size" value="{Size}" id="lblSize"/>
+				    <DisplayListItem label="Currency" value="{Currency}" id="lblCurrency" visible="false"/>
 				    <Bar>
 				    	<contentRight>
-				    		<Label xmlns="sap.m" text="Price: " width="100%" id="label1"/>
-				    		<Input xmlns="sap.m" width="50%" id="input0" type="Number" textAlign="Right" value="{Netprice}"/>
+				    		<Label xmlns="sap.m" text="Price: " width="100%" id="lblPrice"/>
+				    		<Input xmlns="sap.m" width="50%" id="inputNumber" type="Number" textAlign="Right" value="{Netprice}"/>
 				    	</contentRight>
 				     </Bar>
 			    

@@ -1,6 +1,7 @@
 sap.ui.define(["sap/ui/core/mvc/Controller",
-	"sap/ui/core/UIComponent"
-], function (Controller) {
+	"sap/ui/core/UIComponent",
+	"sap/m/MessageBox"
+], function (Controller,UIComponent,MessageBox) {
 	"use strict";
 	return Controller.extend("sap.m.PrintPOC.controller.Screen2View", {
 		/**
@@ -143,21 +144,33 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var printPage = '';
 			//for monospaced font
 			printPage += '<code>';
+			
+			//i18n for messages
+			
 			// jQuery.sap.require("jquery.sap.resources");
-
 			//   var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
 			//   var oBundle = jQuery.sap.resources({
 			//       url: "i18n/i18n.properties",
 			//       locale: sLocale
 			//   })
-
 			//   var msgStyleDescription = oBundle.getText("StyleDescription", [sLocale]);
-
-			printPage += '[Style]'; //style
+			var stylearr = this.getView().byId("style").getText().split(' - ');
+			if(stylearr.length<2)
+			{
+				if(!stylearr[0])
+					stylearr[0] = "";
+				stylearr[1] = "";
+			}
+			
+			var curr = 'EUR';
+			if(items.length>0&&items[0].mProperties.Currency)
+				curr = items[0].mProperties.Currency;
+			
+			printPage += stylearr[0]; //style
 			printPage += '<br/>';
-			printPage += '[Style Description]<br/>'; //---->i18n
+			printPage += stylearr[1]+'<br/>'; //---->i18n
 			printPage += '<br/>';
-			printPage += 'EAN             Color   Size      Price (EUR)<br/>';
+			printPage += 'EAN             Color   Size      Price ('+curr+')<br/>';
 			printPage += '=============   =====   ======      =========<br/>';
 			for (var i = 0; i < items.length; i++) {
 				var printLine = '';
@@ -175,9 +188,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				name: 'EANList', // + style
 				printerId: ''
 			};
-			cordova.plugins.printer.print(printPage, options, function (res) {
-				//alert(res ? 'Done' : 'Canceled'); //----->i18n
-			});
+			if(cordova){
+				cordova.plugins.printer.print(printPage, options, function (res) {
+					console.log(res?"Done":"Canceled")
+				});
+			}
 		}
 	});
 });

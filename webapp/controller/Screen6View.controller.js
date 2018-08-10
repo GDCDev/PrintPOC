@@ -50,14 +50,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 		
 		onNavBack: function(oEvent) {
-			var oHistory = sap.ui.core.routing.History.getInstance();
-			var	sPreviousHash = oHistory.getPreviousHash();
-			//this.byId("page").destroyContent();
-			if (sPreviousHash !== undefined) {
-				history.go(-1);
-			} else {
+			// var oHistory = sap.ui.core.routing.History.getInstance();
+			// var	sPreviousHash = oHistory.getPreviousHash();
+			// if (sPreviousHash !== undefined) {
+			// 	history.go(-1);
+			// } else {
 				this.getOwnerComponent().getRouter().navTo("Screen1View");
-			}
+			// }
 		},
 		
 		/**

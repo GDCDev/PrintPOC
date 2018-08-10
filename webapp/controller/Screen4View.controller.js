@@ -1,4 +1,4 @@
-sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
+sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox"], function (Controller,MessageBox) {
 	"use strict";
 	return Controller.extend("sap.m.PrintPOC.controller.Screen4View", {
 		onInit: function() {
@@ -73,6 +73,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 			}
 		},
 		
+		//more info for barcode
 		//https://github.com/lindell/JsBarcode/wiki/Options
 		printLabel: function (oEvent) {
 			var printPage = '<div style="width:230;height:161">\
@@ -89,27 +90,29 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 		{6}<div style="float:right">{7}</div>\
 	</div>';
 	
-			printPage = printPage.replace(/\{0\}/g, "013")
-					.replace(/\{1\}/g, "E1")
-					.replace(/\{2\}/g, "053EE1B002")
-					.replace(/\{3\}/g, "001")
-					.replace(/\{4\}/g, "34")
-					.replace(/\{5\}/g, "4053571463596")
-					.replace(/\{6\}/g, "EUR")
-					.replace(/\{7\}/g, "100,00");
+			printPage = printPage.replace(/\{0\}/g, this.byId("lblSeason").getValue())
+					.replace(/\{1\}/g, this.byId("lblDivision").getValue())
+					.replace(/\{2\}/g, this.byId("lblStyle").getValue())
+					.replace(/\{3\}/g, this.byId("lblColor").getValue())
+					.replace(/\{4\}/g, this.byId("lblSize").getValue())
+					.replace(/\{5\}/g, this.byId("lblEAN").getValue())
+					.replace(/\{6\}/g, this.byId("lblCurrency").getValue())
+					.replace(/\{7\}/g, this.byId("inputNumber").getValue());
 
 			var options = {
-				name: 'EANList', // + style
+				name: 'EANDetail-'+this.byId("lblEAN").getValue(), // + EAN
 				printerId: ''
 			};
 			
 			document.getElementById('printContainer').innerHTML=printPage;
 			JsBarcode(".barcode").init();
 			
-			cordova.plugins.printer.print(document.getElementById('printContainer'), options, function (res) {
-				//alert(res ? 'Done' : 'Canceled'); //----->i18n
-				document.getElementById('printContainer').innerHTML="";
-			});
+			if(cordova){
+				cordova.plugins.printer.print(document.getElementById('printContainer'), options, function (res) {
+					document.getElementById('printContainer').innerHTML="";
+					console.log(res?"Done":"Canceled");
+				});
+			}
 		}
 	});
 });

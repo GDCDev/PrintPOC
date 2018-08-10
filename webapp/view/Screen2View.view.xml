@@ -7,7 +7,7 @@
 					
 					<VBox width="100%" direction="Column" id="vbox0">
 				        <items>
-				            <Label  width="100%" id="style" class="labelStyle"/>
+				            <Label width="100%" id="style" class="labelStyle"/>
 				        </items>
 				    </VBox>
 				    <List id="poList" modeAnimationOn="false" items="{path:'/eanSet'}">
@@ -30,7 +30,7 @@
 			<footer>
 			    <Bar class="sapContrast sapContrastPlus" id="bar0">
 			        <contentMiddle>
-			            <Button text="{i18n>printList}" width="100px" id="button0" type="Emphasized"/>
+			            <Button text="{i18n>printList}" width="100px" id="button0" type="Emphasized" press="PrintEANList"/>
 			        </contentMiddle>
 			    </Bar>
 			</footer>
