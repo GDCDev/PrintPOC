@@ -40,7 +40,7 @@ sap.ui.define([
 					{
 						if(result.cancelled){
 							//test
-							that.barcodes.push("123");
+							that.barcodes.push("4060469458664");
 							//navto 
 							if(that.barcodes.length==0)
 								that.getOwnerComponent().getRouter().navTo("Screen1View");

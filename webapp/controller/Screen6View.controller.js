@@ -43,6 +43,23 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			// }
 		},
 		
+		onLineItemPressed: function(oEvent) {
+			this.getOwnerComponent().getRouter().navTo("Screen4View", {
+				ean: encodeURIComponent(oEvent.getSource().getBindingContext().getProperty("Code"))
+			}, false);
+		},
+		
+		onNavBack: function(oEvent) {
+			var oHistory = sap.ui.core.routing.History.getInstance();
+			var	sPreviousHash = oHistory.getPreviousHash();
+			//this.byId("page").destroyContent();
+			if (sPreviousHash !== undefined) {
+				history.go(-1);
+			} else {
+				this.getOwnerComponent().getRouter().navTo("Screen1View");
+			}
+		},
+		
 		/**
 		 *@memberOf sap.m.PrintPOC.controller.Screen6View
 		 */
