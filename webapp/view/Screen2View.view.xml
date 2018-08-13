@@ -10,7 +10,7 @@
 				            <Label width="100%" id="style" class="labelStyle"/>
 				        </items>
 				    </VBox>
-				    <List id="poList" modeAnimationOn="false" items="{path:'/eanSet'}">
+				    <List id="poList" modeAnimationOn="false" items="{path:'/EANModels'}">
 					<ObjectListItem type="Active" title="{EAN}" number="{Netprice}" numberUnit="{Currency}" press="onLineItemPressed">
 				        <attributes>
 				            <ObjectAttribute text="{i18n>color}: {Colour}" id="color"/>

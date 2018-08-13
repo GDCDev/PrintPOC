@@ -1,0 +1,11 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+	<edmx:DataServices>
+		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="oDataStandard.Models">
+			<EntityType Name="EANModel">
+				<Key><PropertyRef Name="Id"/></Key><Property Name="Id" Type="Edm.Int32" Nullable="false"/><Property Name="EAN" Type="Edm.String"/><Property Name="Style" Type="Edm.String"/><Property Name="Description" Type="Edm.String"/><Property Name="Currency" Type="Edm.String"/><Property Name="Netprice" Type="Edm.Decimal" Nullable="false"/><Property Name="Season" Type="Edm.String"/><Property Name="Division" Type="Edm.String"/><Property Name="Colour" Type="Edm.String"/><Property Name="Size" Type="Edm.String"/></EntityType>
+		</Schema>
+		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Default">
+			<EntityContainer Name="Container"><EntitySet Name="EANModels" EntityType="oDataStandard.Models.EANModel"/></EntityContainer>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

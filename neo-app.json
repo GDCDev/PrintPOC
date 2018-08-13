@@ -18,6 +18,14 @@
         "entryPath": "/test-resources"
       },
       "description": "SAPUI5 Test Resources"
+    },
+    {
+      "path": "/eanSet",
+      "target": {
+        "type": "destination",
+        "name": "eanSet"
+      },
+      "description": "eanSet"
     }
   ],
   "sendWelcomeFileRedirect": true

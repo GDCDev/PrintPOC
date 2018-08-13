@@ -21,6 +21,14 @@
 					"odataVersion": "2.0",
 					"localUri": "localService/metadata.xml"
 				}
+			},
+			"eanSet": {
+				"uri": "/eanSet/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "4.0",
+					"localUri": "localService/eanSet/metadata.xml"
+				}
 			}
 		}
 	},
@@ -69,7 +77,14 @@
 				}
 			},
 			"": {
-				"dataSource": "POC"
+				"type": "sap.ui.model.odata.v4.ODataModel",
+				"settings": {
+					"operationMode": "Server",
+					"synchronizationMode": "None",
+					"groupId": "$direct"
+				},
+				"dataSource": "eanSet",
+				"preload": true
 			}
 		},
 		"resources": {
