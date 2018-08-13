@@ -1,16 +1,19 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="sap.m.PrintPOC.controller.Screen6View" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" controllerName="sap.m.PrintPOC.controller.Screen6View">
 	<App>
 		<pages>
 			<Page title="{i18n>title}" showNavButton="true" navButtonPress="onNavBack">
 				<content>
-				     <List id="barcodeList" items="{/listData}">
-						<StandardListItem type="Active" title="{Code}" press="onLineItemPressed"/>
+				     <List id="barcodeList" items="{view>/listData}">
+				     	<items>
+						<StandardListItem type="Active" title="{view>Code}" press="onLineItemPressed"/>
+						</items>
 					</List>
+				   
 				</content>
 				<footer>
 				    <Bar class="sapContrast sapContrastPlus" id="bar0">
 					    <contentRight>
-					        <Button xmlns="sap.m" text="{i18n>cancel}" width="100px" id="button0" press="action" xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen1View'\}\}\}"/>
+					        <Button xmlns="sap.m" xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" text="{i18n>cancel}" width="100px" id="button0" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen1View'\}\}\}"/>
 					    </contentRight>
 				    </Bar>	
 				</footer>

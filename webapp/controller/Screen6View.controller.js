@@ -1,5 +1,6 @@
 sap.ui.define(["sap/ui/core/mvc/Controller",
-		'sap/ui/model/json/JSONModel'], function (Controller,JSONModel) {
+	'sap/ui/model/json/JSONModel'
+], function (Controller, JSONModel) {
 	"use strict";
 	return Controller.extend("sap.m.PrintPOC.controller.Screen6View", {
 		onInit: function () {
@@ -10,17 +11,20 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		_onObjectMatched: function (oEvent) {
 			var barcodes = oEvent.getParameter("arguments").barcodes.split(',');
-			
+
 			var barcodesObject = [];
-			barcodes.forEach(function(e,i){
-				barcodesObject.push({Code:e});
+			barcodes.forEach(function (e, i) {
+				barcodesObject.push({
+					Code: e
+				});
 			});
-			//var list = this.getView().byId("barcodeList");
-			var oModel = new JSONModel();
-			oModel.setData({
-				listData : barcodesObject
+
+			var listDataModel = new JSONModel();
+			listDataModel.setData({
+				listData: barcodesObject
 			});
-			this.getView().setModel(oModel);
+			this.getView().setModel(listDataModel, "view");
+
 			// if (query && query !== "") {
 			// 	var filters = [];
 			// 	var filter = new sap.ui.model.Filter("Style", sap.ui.model.FilterOperator.Contains, query);
@@ -42,23 +46,24 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			// 	styleCtrl.setText(query + " - " + desc);
 			// }
 		},
-		
-		onLineItemPressed: function(oEvent) {
+
+		onLineItemPressed: function (oEvent) {
 			this.getOwnerComponent().getRouter().navTo("Screen4View", {
-				ean: encodeURIComponent(oEvent.getSource().getBindingContext().getProperty("Code"))
+				//ean: encodeURIComponent(oEvent.getSource().getBindingContext().getProperty("Code"))
+				ean: encodeURIComponent(oEvent.getSource().getTitle())
 			}, false);
 		},
-		
-		onNavBack: function(oEvent) {
-			 var oHistory = sap.ui.core.routing.History.getInstance();
-			 var	sPreviousHash = oHistory.getPreviousHash();
-			 if (sPreviousHash !== undefined) {
-			 	history.go(-1);
-			 } else {
+
+		onNavBack: function (oEvent) {
+			var oHistory = sap.ui.core.routing.History.getInstance();
+			var sPreviousHash = oHistory.getPreviousHash();
+			if (sPreviousHash !== undefined) {
+				history.go(-1);
+			} else {
 				this.getOwnerComponent().getRouter().navTo("Screen1View");
-			 }
+			}
 		},
-		
+
 		/**
 		 *@memberOf sap.m.PrintPOC.controller.Screen6View
 		 */
