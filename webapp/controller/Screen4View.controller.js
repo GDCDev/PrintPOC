@@ -17,7 +17,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox"], function (Contr
 			this._sEan = decodeURIComponent(oEvent.getParameter("arguments").ean);
 
 			
-			this._sPath = this.getView().getModel().createKey("/eanSet", {
+			this._sPath = this.getView().getModel().createKey("/EANModels", {
 				EAN: this._sEan
 			});
 
