@@ -133,7 +133,7 @@ sap.ui.define([
 			var items = this.byId("poList").getItems();
 			var printPage = "";
 			//for monospaced font
-			printPage += "<code>";
+			printPage += "<tt>";
 			var stylearr = this.getView().byId("style").getText().split(" - ");
 			if (stylearr.length < 2) {
 				if (!stylearr[0])
@@ -161,7 +161,7 @@ sap.ui.define([
 				printPage += printLine;
 			}
 			//for monospaced font
-			printPage += "</code>";
+			printPage += "</tt>";
 			printPage = printPage.replace(/ /g, "&nbsp;");
 			var options = {
 				name: "StyleEANList"+stylearr[0],
