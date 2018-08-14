@@ -11,17 +11,17 @@
 				</footer>
 			<content>
 				<Panel id="detail" backgroundDesign="Solid">
-				    <DisplayListItem label="EAN" value="{EAN}" id="lblEAN"/>
-				    <DisplayListItem label="Style" value="{Style}" id="lblStyle"/>
+				    <DisplayListItem label="{i18n>ean}" value="{EAN}" id="lblEAN"/>
+				    <DisplayListItem label="{i18n>styleInList}" value="{Style}" id="lblStyle"/>
 				    <DisplayListItem label="" value="{Description}" id="lblDescription"/>
-				    <DisplayListItem label="Season" value="{Season}" id="lblSeason"/>
-				    <DisplayListItem label="Division" value="{Division}" id="lblDivision"/>
-				    <DisplayListItem label="Color" value="{Colour}" id="lblColor"/>
-				    <DisplayListItem label="Size" value="{Size}" id="lblSize"/>
-				    <DisplayListItem label="Currency" value="{Currency}" id="lblCurrency" visible="false"/>
+				    <DisplayListItem label="{i18n>season}" value="{Season}" id="lblSeason"/>
+				    <DisplayListItem label="{i18n>division}" value="{Division}" id="lblDivision"/>
+				    <DisplayListItem label="{i18n>color}" value="{Colour}" id="lblColor"/>
+				    <DisplayListItem label="{i18n>size}" value="{Size}" id="lblSize"/>
+				    <DisplayListItem label="{i18n>currency}" value="{Currency}" id="lblCurrency" visible="false"/>
 				    <Bar>
 				    	<contentRight>
-				    		<Label xmlns="sap.m" text="Price: " width="100%" id="lblPrice"/>
+				    		<Label xmlns="sap.m" text="{i18n>priceLbl}" width="100%" id="lblPrice"/>
 				    		<Input xmlns="sap.m" width="50%" id="inputNumber" type="Number" textAlign="Right" value="{Netprice}"/>
 				    	</contentRight>
 				     </Bar>

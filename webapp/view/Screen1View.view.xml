@@ -2,22 +2,24 @@
 	<App id="idAppControl">
 		<pages><Page title="{i18n>title}">
 				<content>
-				    <VBox width="100%" direction="Column" id="vbox0">
-				        <items>
-				            <Label text="{i18n>style}" width="100%" id="label0"/>
-				        </items>
-				    </VBox>
-				    <VBox width="100%" direction="Column" id="vbox1">
-				        <items>
-				            <Input width="100%" id="styleInput"/>
-				        </items>
-				    </VBox>
+					<Panel id="mainPanel" backgroundDesign="Transparent" expanded="true">
+					    <VBox width="100%" direction="Column" id="vbox0">
+					        <items>
+					            <Label text="{i18n>style}" width="100%" id="label0"/>
+					        </items>
+					    </VBox>
+					    <VBox width="100%" direction="Column" id="vbox1">
+					        <items>
+					            <Input width="100%" id="styleInput"/>
+					        </items>
+					    </VBox>
+				    </Panel>
 				</content>
 			<footer>
 			    <Toolbar width="100%" id="toolbar1">
 			        <content>
 			            <Button xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" text="{i18n>scan}" width="60px" id="btnScan" type="Accept" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen3View'\}\}\}"/>
-			            <Button text="{i18n>multiScan}" width="115px" id="btnMultiScan" type="Accept" press="action" xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen5View'\}\}\}"/>
+			            <Button xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" text="{i18n>multiScan}" width="115px" id="btnMultiScan" type="Accept" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen5View'\}\}\}"/>
 			            <Button xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" text="{i18n>go}" width="50px" id="btnGo" type="Emphasized" press="onGoPressed"/>
 			            <Button xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" text="{i18n>cancel}" width="80px" id="btnCancel" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen6View'\}\}\}"/>
 			        </content>
