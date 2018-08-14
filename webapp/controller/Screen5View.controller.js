@@ -34,7 +34,6 @@ sap.ui.define([
 		},
 		
 		_scan: function(that){
-			//---->i18n
 			cordova.plugins.barcodeScanner.scan(
 					function (result) 
 					{
@@ -49,7 +48,7 @@ sap.ui.define([
 						}
 						else if(result.format!=="BAR_CODE"||!that._checkEAN13(result.text)){
 							//reScan
-							MessageBox.alert("Scan error.\nPlease scan again.",{
+							MessageBox.alert(that.msgScanErrAgain,{
 									icon : MessageBox.Icon.ERROR,
 									title : "Error",
 									onClose: function(oAction) {
@@ -60,13 +59,12 @@ sap.ui.define([
 						else{
 							if(!that.barcodes.contains(result.text))
 								that.barcodes.push(result.text);
-							//i18n
-							MessageToast.show("Scanned a new barcode:\n"+result.text,{duration: 2000});
+							MessageToast.show(that.msgScanNew+"\n"+result.text,{duration: 2000});
 						}
 					},
 					function (error) {
 						//reScan
-						MessageBox.alert("Scan error.\nPlease scan again.",{
+						MessageBox.alert(that.msgScanErrAgain,{
 								icon : MessageBox.Icon.ERROR,
 								title : "Error",
 								onClose: function(oAction) {
@@ -81,10 +79,19 @@ sap.ui.define([
                 var oRouter = UIComponent.getRouterFor(this);
                 oRouter.getRoute("Screen5View")
                     .attachPatternMatched(this._onAfterRendering, this);
-                this.barcodes=[];
+                
+                jQuery.sap.require("jquery.sap.resources");
+				var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
+				var oBundle = jQuery.sap.resources({
+					url: "i18n/i18n.properties",
+					locale: sLocale
+				});
+				this.msgScanErrAgain=oBundle.getText("msgScanErr", [sLocale])+"\n"+oBundle.getText("msgScanAgain", [sLocale]);
+				this.msgScanNew = oBundle.getText("msgScanNew", [sLocale]);
             },
             
         _onAfterRendering: function (oEvent) {
+                this.barcodes=[];
             	//only async call works even though 1ms
 	            var interval = jQuery.sap.intervalCall(5, this, function(){
 	            		if(cordova){

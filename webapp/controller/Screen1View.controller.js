@@ -35,6 +35,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox"], function (Contr
 				}
 			}
 		},
+		onInit: function(){
+                
+            jQuery.sap.require("jquery.sap.resources");
+			var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
+			var oBundle = jQuery.sap.resources({
+				url: "i18n/i18n.properties",
+				locale: sLocale
+			});
+			this.msgInputErrAgain=oBundle.getText("msgInputErr", [sLocale])+"\n"+oBundle.getText("msgInputAgain", [sLocale]);
+        },
 		/**
 		 *@memberOf sap.m.PrintPOC.controller.Screen1View
 		 */
@@ -45,7 +55,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox"], function (Contr
 				oParams["styleId"] = oInput.getValue();
 				this.getOwnerComponent().getRouter().navTo("Screen2View", oParams);
 			} else {
-				MessageBox.alert("Input error.\nPlease input style.",{
+				MessageBox.alert(this.msgInputErrAgain,{
 									icon : MessageBox.Icon.ERROR,
 									title : "Error",
 									onClose: function(oAction) {

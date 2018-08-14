@@ -16,9 +16,9 @@
 			<footer>
 			    <Toolbar width="100%" id="toolbar1">
 			        <content>
-			            <Button xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" text="{i18n>scan}" width="80px" id="btnScan" type="Accept" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen3View'\}\}\}"/>
-			            <Button text="{i18n>multiScan}" width="120px" id="btnMultiScan" type="Accept" press="action" xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen5View'\}\}\}"/>
-			            <Button xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" text="{i18n>go}" width="80px" id="btnGo" type="Emphasized" press="onGoPressed"/>
+			            <Button xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" text="{i18n>scan}" width="60px" id="btnScan" type="Accept" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen3View'\}\}\}"/>
+			            <Button text="{i18n>multiScan}" width="115px" id="btnMultiScan" type="Accept" press="action" xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen5View'\}\}\}"/>
+			            <Button xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" text="{i18n>go}" width="50px" id="btnGo" type="Emphasized" press="onGoPressed"/>
 			            <Button xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" text="{i18n>cancel}" width="80px" id="btnCancel" press="action" action:wiring="\{'press':\{'navigation':\{'routeName':'Screen6View'\}\}\}"/>
 			        </content>
 			    </Toolbar>

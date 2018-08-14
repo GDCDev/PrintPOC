@@ -132,14 +132,6 @@ sap.ui.define([
 			var printPage = "";
 			//for monospaced font
 			printPage += "<code>";
-			//i18n for messages
-			// jQuery.sap.require("jquery.sap.resources");
-			//   var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
-			//   var oBundle = jQuery.sap.resources({
-			//       url: "i18n/i18n.properties",
-			//       locale: sLocale
-			//   })
-			//   var msgStyleDescription = oBundle.getText("StyleDescription", [sLocale]);
 			var stylearr = this.getView().byId("style").getText().split(" - ");
 			if (stylearr.length < 2) {
 				if (!stylearr[0])
@@ -170,7 +162,7 @@ sap.ui.define([
 			printPage += "</code>";
 			printPage = printPage.replace(/ /g, "&nbsp;");
 			var options = {
-				name: "EANList",
+				name: "StyleEANList"+stylearr[0],
 				// + style
 				printerId: ""
 			};

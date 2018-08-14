@@ -28,7 +28,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/ui/core/UIComponent","sap/m/Mes
 		},
 		
 		_scan: function(that){
-			//---->i18n
 			cordova.plugins.barcodeScanner.scan(
 					function (result) 
 					{
@@ -38,7 +37,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/ui/core/UIComponent","sap/m/Mes
 						}
 						else if(result.format!=="BAR_CODE"||!that._checkEAN13(result.text)){
 							//reScan
-							MessageBox.alert("Scan error.\nPlease scan again.",{
+							MessageBox.alert(that.msgScanErrAgain,{
 									icon : MessageBox.Icon.ERROR,
 									title : "Error",
 									onClose: function(oAction) {
@@ -53,7 +52,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/ui/core/UIComponent","sap/m/Mes
 					},
 					function (error) {
 						//reScan
-						MessageBox.alert("Scan error.\nPlease scan again.",{
+						MessageBox.alert(that.msgScanErrAgain,{
 								icon : MessageBox.Icon.ERROR,
 								title : "Error",
 								onClose: function(oAction) {
@@ -68,6 +67,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/ui/core/UIComponent","sap/m/Mes
                 var oRouter = UIComponent.getRouterFor(this);
                 oRouter.getRoute("Screen3View")
                     .attachPatternMatched(this._onAfterRendering, this);
+                    
+                jQuery.sap.require("jquery.sap.resources");
+				var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
+				var oBundle = jQuery.sap.resources({
+					url: "i18n/i18n.properties",
+					locale: sLocale
+				});
+				this.msgScanErrAgain=oBundle.getText("msgScanErr", [sLocale])+"\n"+oBundle.getText("msgScanAgain", [sLocale]);
             },
             
         _onAfterRendering: function (oEvent) {

@@ -7,13 +7,19 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var oRouter = this.getOwnerComponent().getRouter();
 			oRouter.getRoute("Screen6View")
 				.attachPatternMatched(this._onObjectMatched, this);
+			this.barcodes = [];
 		},
 
 		_onObjectMatched: function (oEvent) {
 			var barcodes = oEvent.getParameter("arguments").barcodes.split(',');
-
-			var barcodesObject = [];
 			barcodes.forEach(function (e, i) {
+				if(!this.barcodes.includes(e)){
+					this.barcodes.push(e);
+				}
+			},this);
+			
+			var barcodesObject = [];
+			this.barcodes.forEach(function (e, i) {
 				barcodesObject.push({
 					Code: e
 				});
@@ -24,27 +30,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				listData: barcodesObject
 			});
 			this.getView().setModel(listDataModel, "view");
-
-			// if (query && query !== "") {
-			// 	var filters = [];
-			// 	var filter = new sap.ui.model.Filter("Style", sap.ui.model.FilterOperator.Contains, query);
-			// 	filters.push(filter);
-			// 	// update list binding
-			// 	var list = this.getView().byId("poList");
-			// 	var binding = list.getBinding("items");
-			// 	binding.filter(filters);
-
-			// 	var desc = "";
-			// 	var filteredData = binding.aLastContextData;
-			// 	if (filteredData && filteredData.length > 0) {
-			// 		var firstObjStr = filteredData[0];
-			// 		var firstObj = new sap.ui.model.json.JSONModel();
-			// 		firstObj.setData(JSON.parse(firstObjStr));
-			// 		desc = firstObj.getProperty("/Description");
-			// 	}
-			// 	var styleCtrl = this.getView().byId("style");
-			// 	styleCtrl.setText(query + " - " + desc);
-			// }
 		},
 
 		onLineItemPressed: function (oEvent) {
@@ -61,7 +46,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				history.go(-1);
 			} else {
 				this.getOwnerComponent().getRouter().navTo("Screen1View");
+				this._clearList(this);
 			}
+		},
+		
+		_clearList: function(that){
+			that.barcodes = [];
 		},
 
 		/**
@@ -91,6 +81,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						type: prop.type
 					}));
 				});
+				if(oNavigation.routeName=="Screen1View"){
+					this._clearList(this);
+				}
 				if (Object.getOwnPropertyNames(oParams).length !== 0) {
 					this.getOwnerComponent().getRouter().navTo(oNavigation.routeName, oParams);
 				} else {
