@@ -1,4 +1,4 @@
-sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
+sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox"], function (Controller,MessageBox) {
 	"use strict";
 	return Controller.extend("sap.m.PrintPOC.controller.Screen1View", {
 		/**
@@ -41,12 +41,18 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 		onGoPressed: function (oEvent) {
 			var oParams = {};
 			var oInput = this.byId("styleInput");
-			oParams["styleId"] = oInput.getValue();
-			this.getOwnerComponent().getRouter().navTo("Screen2View", oParams);
-
-			//this._oRouter.navTo("Screen2View", {
-			//	styleId: encodeURIComponent(oEvent.getSource().getBindingContext().getProperty("styleInput"))
-			//}, false);
+			if (oInput.getValue().trim() != "") {
+				oParams["styleId"] = oInput.getValue();
+				this.getOwnerComponent().getRouter().navTo("Screen2View", oParams);
+			} else {
+				MessageBox.alert("Input error.\nPlease input style.",{
+									icon : MessageBox.Icon.ERROR,
+									title : "Error",
+									onClose: function(oAction) {
+										that._scan(that);
+								}
+							});
+			}
 		}
 	});
 });
