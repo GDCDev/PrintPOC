@@ -9,18 +9,19 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox"], function (Contr
 		},
 
 		_onRouteMatched: function(oEvent) {
-			//var oViewModel = this.getModel("detailView");
+			
 
-			// Build binding context path from URL parameters: the URL contains the product ID in parameter 'productId'.
-			// The path pattern is: /Products('<productId>')
+			// Build binding context path from URL parameters: the URL contains the product ID in parameter 'Id'.
+			// The path pattern is: /EANModels('<Id>')
 
 			this._sEan = decodeURIComponent(oEvent.getParameter("arguments").ean);
-
+			this._sPath =  "/EANModels('"+ this._sEan +"')";
 			
-			this._sPath = this.getView().getModel().createKey("/EANModels", {
-				EAN: this._sEan
-			});
+			//this._sPath = this.getView().getModel().createKey("/EANModels", {
+			//	EAN: this._sEan
+			//});
 
+			//var filter = new sap.ui.model.Filter("EAN", sap.ui.model.FilterOperator.EQ, this._sEan);
 			var oDetail = this.byId("detail");
 			if (oDetail) {
 				oDetail.bindElement({ path: this._sPath });

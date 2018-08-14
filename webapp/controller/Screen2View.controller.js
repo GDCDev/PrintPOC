@@ -1,7 +1,8 @@
-sap.ui.define(["sap/ui/core/mvc/Controller",
+sap.ui.define([
+	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/UIComponent",
 	"sap/m/MessageBox"
-], function (Controller,UIComponent,MessageBox) {
+], function (Controller, UIComponent, MessageBox) {
 	"use strict";
 	return Controller.extend("sap.m.PrintPOC.controller.Screen2View", {
 		/**
@@ -9,18 +10,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 		 * @memberOf sap.m.PrintPOC.view.Screen2View
 		 */
-
 		onInit: function () {
 			var oRouter = this.getOwnerComponent().getRouter();
-			oRouter.getRoute("Screen2View")
-				.attachPatternMatched(this._onObjectMatched, this);
+			oRouter.getRoute("Screen2View").attachPatternMatched(this._onObjectMatched, this);
 		},
-
 		_onObjectMatched: function (oEvent) {
 			var query = oEvent.getParameter("arguments").styleId;
-
-			//this.getView().bindElement({path: decodeURIComponent(sPath)});
-
 			if (query && query !== "") {
 				var filters = [];
 				var filter = new sap.ui.model.Filter("Style", sap.ui.model.FilterOperator.Contains, query);
@@ -29,28 +24,21 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				var list = this.getView().byId("poList");
 				var binding = list.getBinding("items");
 				binding.filter(filters);
-
-				//var oModel = this.getView().getModel();
-				//var desc = oModel.getProperty("/eanSet(Style='"+ query+ "')/Description"); //no effect
-				//var descStr = "/eanSet('4059602799160')/Description";			//based on odata, key access
-				//var desc = oModel.getProperty(descStr);
-				//var oData = oModel.oData;					//oData' content
-
-				var desc = "";
-				var filteredData = binding.aLastContextData;
-				if (filteredData && filteredData.length > 0) {
-					var firstObjStr = filteredData[0];
-					var firstObj = new sap.ui.model.json.JSONModel();
-					firstObj.setData(JSON.parse(firstObjStr));
-					desc = firstObj.getProperty("/Description");
-				}
-				var styleCtrl = this.getView().byId("style");
-				styleCtrl.setText(query + " - " + desc);
-				//styleCtrl.bindProperty("text", "/eanSet('xxxxx')/Style");
+				//var sServiceUrl = "/eanSet/";
+				//var oModel = new sap.ui.model.odata.v4.ODataModel(sServiceUrl);
+				//oModel.setUseBatch(false);
+				//sap.ui.getCore().setModel(oModel);
+				// get data using filter
+				//this.getView().getModel().read("/EANModels", {
+				//    filters: filters,     
+				//    success: function(oData, oResponse){
+				//        console.log(oData);
+				//   }
+				//});         
+				
 			}
 		},
-		
-		onLineItemPressed: function(oEvent) {
+		onLineItemPressed: function (oEvent) {
 			this.getOwnerComponent().getRouter().navTo("Screen4View", {
 				ean: encodeURIComponent(oEvent.getSource().getBindingContext().getProperty("EAN"))
 			}, false);
@@ -59,20 +47,23 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
 		 * (NOT before the first rendering! onInit() is used for that one!).
 		 * @memberOf sap.m.PrintPOC.view.Screen2View
-		 */ //	onBeforeRendering: function() {
+		 */
+		//	onBeforeRendering: function() {
 		//
 		//	},
 		/**
 		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
 		 * This hook is the same one that SAPUI5 controls get after being rendered.
 		 * @memberOf sap.m.PrintPOC.view.Screen2View
-		 */ //	onAfterRendering: function() {
+		 */
+		//	onAfterRendering: function() {
 		//
 		//	},
 		/**
 		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
 		 * @memberOf sap.m.PrintPOC.view.Screen2View
-		 */ //	onExit: function() {
+		 */
+		//	onExit: function() {
 		//
 		//	}
 		/**
@@ -119,7 +110,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					txt = txt.substring(0, nums);
 					return txt;
 				}
-
 				while (txt.length < nums) {
 					if (isLeft) {
 						txt = " " + txt;
@@ -136,17 +126,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					start += 2;
 				else
 					start = txt.length;
-
 				return txt.substring(start);
 			};
-
-			var items = this.byId('poList').getItems();
-			var printPage = '';
+			var items = this.byId("poList").getItems();
+			var printPage = "";
 			//for monospaced font
-			printPage += '<code>';
-			
+			printPage += "<code>";
 			//i18n for messages
-			
 			// jQuery.sap.require("jquery.sap.resources");
 			//   var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
 			//   var oBundle = jQuery.sap.resources({
@@ -154,44 +140,65 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			//       locale: sLocale
 			//   })
 			//   var msgStyleDescription = oBundle.getText("StyleDescription", [sLocale]);
-			var stylearr = this.getView().byId("style").getText().split(' - ');
-			if(stylearr.length<2)
-			{
-				if(!stylearr[0])
+			var stylearr = this.getView().byId("style").getText().split(" - ");
+			if (stylearr.length < 2) {
+				if (!stylearr[0])
 					stylearr[0] = "";
 				stylearr[1] = "";
 			}
-			
-			var curr = 'EUR';
-			if(items.length>0&&items[0].mProperties.Currency)
+			var curr = "EUR";
+			if (items.length > 0 && items[0].mProperties.Currency)
 				curr = items[0].mProperties.Currency;
-			
-			printPage += stylearr[0]; //style
-			printPage += '<br/>';
-			printPage += stylearr[1]+'<br/>'; //---->i18n
-			printPage += '<br/>';
-			printPage += 'EAN             Color   Size      Price ('+curr+')<br/>';
-			printPage += '=============   =====   ======      =========<br/>';
+			printPage += stylearr[0];
+			//style
+			printPage += "<br/>";
+			printPage += stylearr[1] + "<br/>";
+			//---->i18n
+			printPage += "<br/>";
+			printPage += "EAN             Color   Size      Price (" + curr + ")<br/>";
+			printPage += "=============   =====   ======      =========<br/>";
 			for (var i = 0; i < items.length; i++) {
-				var printLine = '';
+				var printLine = "";
 				printLine += setBlank(items[i].mProperties.title, 16);
 				printLine += setBlank(getAfterColon(items[i].mAggregations.attributes[0].mProperties.text), 8);
 				printLine += setBlank(getAfterColon(items[i].mAggregations.attributes[1].mProperties.text), 5);
 				printLine += setBlank(items[i].mProperties.number, 15, true);
-				printLine += '<br/>';
+				printLine += "<br/>";
 				printPage += printLine;
 			}
 			//for monospaced font
-			printPage += '</code>';
+			printPage += "</code>";
 			printPage = printPage.replace(/ /g, "&nbsp;");
 			var options = {
-				name: 'EANList', // + style
-				printerId: ''
+				name: "EANList",
+				// + style
+				printerId: ""
 			};
-			if(cordova){
+			if (cordova) {
 				cordova.plugins.printer.print(printPage, options, function (res) {
-					console.log(res?"Done":"Canceled")
+					console.log(res ? "Done" : "Canceled");
 				});
+			}
+		},
+		/**
+		 *@memberOf sap.m.PrintPOC.controller.Screen2View
+		 */
+		onUpdateFinished: function (oEvent) {
+			//This code was generated by the layout editor.
+			var items = this.byId("poList").getItems();
+			//var filteredData = binding.aLastContextData;
+			//if (filteredData && filteredData.length > 0) {
+			//	var firstObjStr = filteredData[0];
+			//	var firstObj = new sap.ui.model.json.JSONModel();
+			//	firstObj.setData(JSON.parse(firstObjStr));
+			//	desc = firstObj.getProperty("/Description");
+			//}
+		
+			if (items.length > 0) {
+				var desc = items[0].mAggregations.attributes[2].mProperties.text;
+				var query = items[0].mAggregations.attributes[3].mProperties.text;
+				var styleCtrl = this.getView().byId("style");
+				styleCtrl.setText(query + " - " + desc); //styleCtrl.bindProperty("text", "/eanSet('xxxxx')/Style");
 			}
 		}
 	});
