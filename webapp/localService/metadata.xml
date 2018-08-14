@@ -1,0 +1,21 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+	<edmx:DataServices>
+		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="POC">
+			<EntityType Name="eanSet">
+				<Key>
+					<PropertyRef Name="EAN"/>
+				</Key>
+				<Property Name="ID" Type="Edm.String" Nullable="false"/>
+				<Property Name="Style" Type="Edm.String" Nullable="false" MaxLength="10"/>
+				<Property Name="Description" Type="Edm.String" Nullable="false" MaxLength="200"/>
+				<Property Name="EAN" Type="Edm.String" Nullable="false" MaxLength="13"/>
+				<Property Name="Currency" Type="Edm.String" Nullable="false" MaxLength="5"/>
+				<Property Name="Netprice" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="2"/>
+				<Property Name="Season" Type="Edm.String" Nullable="false" MaxLength="10"/>
+				<Property Name="Division" Type="Edm.String" Nullable="false" MaxLength="10"/>
+				<Property Name="Colour" Type="Edm.String" Nullable="false" MaxLength="10"/>
+				<Property Name="Size" Type="Edm.String" Nullable="false" MaxLength="10"/>
+			</EntityType>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

@@ -19,13 +19,14 @@
       },
       "description": "SAPUI5 Test Resources"
     },
+    
     {
-      "path": "/eanSet",
+      "path": "/EANSet",
       "target": {
         "type": "destination",
-        "name": "eanSet"
+        "name": "jsonSet"
       },
-      "description": "eanSet"
+      "description": "jsonSet"
     }
   ],
   "sendWelcomeFileRedirect": true

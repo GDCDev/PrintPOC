@@ -1,4 +1,4 @@
-sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox"], function (Controller,MessageBox) {
+sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox",'sap/ui/model/json/JSONModel'], function (Controller,MessageBox,JSONModel) {
 	"use strict";
 	return Controller.extend("sap.m.PrintPOC.controller.Screen4View", {
 		onInit: function() {
@@ -9,23 +9,36 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox"], function (Contr
 		},
 
 		_onRouteMatched: function(oEvent) {
-			
-
-			// Build binding context path from URL parameters: the URL contains the product ID in parameter 'Id'.
-			// The path pattern is: /EANModels('<Id>')
-
 			this._sEan = decodeURIComponent(oEvent.getParameter("arguments").ean);
-			this._sPath =  "/EANModels('"+ this._sEan +"')";
 			
-			//this._sPath = this.getView().getModel().createKey("/EANModels", {
-			//	EAN: this._sEan
-			//});
-
-			//var filter = new sap.ui.model.Filter("EAN", sap.ui.model.FilterOperator.EQ, this._sEan);
-			var oDetail = this.byId("detail");
-			if (oDetail) {
-				oDetail.bindElement({ path: this._sPath });
-			}
+			var sServiceUrl = "/EANSet?EAN=" + this._sEan;
+			var dataModel = new JSONModel();
+			var oView = this.getView();
+			$.ajax({
+				type : "GET",
+				url : sServiceUrl,
+				dataType: "json",
+				async : false,
+				success: function(data) {
+					if (data && data.length > 0){
+						dataModel.setData(data[0]);
+						oView.setModel(dataModel, "detail");
+					}
+				},
+				error: function(err) {
+					MessageBox.alert(err,{
+									icon : MessageBox.Icon.ERROR,
+									title : "Error"
+							});
+				}
+			});
+			
+			//this._sPath =  "/EANModels('"+ this._sEan +"')";
+			
+			//var oDetail = this.byId("detail");
+			//if (oDetail) {
+			//	oDetail.bindElement({ path: this._sPath });
+			//}
 			
 		},
 

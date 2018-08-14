@@ -57,10 +57,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox"], function (Contr
 			} else {
 				MessageBox.alert(this.msgInputErrAgain,{
 									icon : MessageBox.Icon.ERROR,
-									title : "Error",
-									onClose: function(oAction) {
-										that._scan(that);
-								}
+									title : "Error"
 							});
 			}
 		}

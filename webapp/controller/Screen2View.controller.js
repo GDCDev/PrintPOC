@@ -1,8 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/UIComponent",
-	"sap/m/MessageBox"
-], function (Controller, UIComponent, MessageBox) {
+	"sap/m/MessageBox",
+	'sap/ui/model/json/JSONModel'
+], function (Controller, UIComponent, MessageBox, JSONModel) {
 	"use strict";
 	return Controller.extend("sap.m.PrintPOC.controller.Screen2View", {
 		/**
@@ -18,31 +19,47 @@ sap.ui.define([
 		_onObjectMatched: function (oEvent) {
 			var query = oEvent.getParameter("arguments").styleId;
 			if (query && query !== "") {
-				var filters = [];
-				var filter = new sap.ui.model.Filter("Style", sap.ui.model.FilterOperator.EQ, query);
-				filters.push(filter);
+				//var filters = [];
+				//var filter = new sap.ui.model.Filter("Style", sap.ui.model.FilterOperator.EQ, query);
+				//filters.push(filter);
 				// update list binding
-				var list = this.getView().byId("poList");
-				var binding = list.getBinding("items");
-				binding.filter(filters);
+				//var list = this.getView().byId("poList");
+				//var binding = list.getBinding("items");
+				//binding.filter(filters);
 				
-				//var sServiceUrl = "/eanSet/";
-				//var oModel = new sap.ui.model.odata.v4.ODataModel(sServiceUrl);
-				//oModel.setUseBatch(false);
-				//sap.ui.getCore().setModel(oModel);
-				//this.getView().getModel().read("/EANModels", {
-				//    filters: filters,     
-				//    success: function(oData, oResponse){
-				//        console.log(oData);
-				//   }
-				//});         
+			
+				var sServiceUrl = "/EANSet?Style=" + query;
+				var listDataModel = new JSONModel();
+				var oView = this.getView();
+				$.ajax({
+					type : "GET",
+					url : sServiceUrl,
+					dataType: "json", 
+					async : false,
+					success: function(data) {
+						
+						listDataModel.setData({
+							listData: data
+						});
+						oView.setModel(listDataModel, "view");
+					},
+					error: function(err) {
+						MessageBox.alert(err,{
+									icon : MessageBox.Icon.ERROR,
+									title : "Error"
+							});
+					}
+				});
 				
 			}
 		},
 		
+	
+		
 		onLineItemPressed: function (oEvent) {
 			this.getOwnerComponent().getRouter().navTo("Screen4View", {
-				ean: encodeURIComponent(oEvent.getSource().getBindingContext().getProperty("EAN"))
+				//ean: encodeURIComponent(oEvent.getSource().getBindingContext().getProperty("EAN"))
+				ean:encodeURIComponent(oEvent.getSource().getProperty("title"))
 			}, false);
 		},
 		/**

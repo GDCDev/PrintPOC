@@ -13,13 +13,13 @@
 				    </VBox>
 					
 					
-				    <List id="poList" modeAnimationOn="false" items="{path:'/EANModels'}" updateFinished="onUpdateFinished">
-					<ObjectListItem type="Active" title="{EAN}" number="{Netprice}" numberUnit="{Currency}" press="onLineItemPressed">
+				    <List id="poList" modeAnimationOn="false" items="{view>/listData}" updateFinished="onUpdateFinished">
+					<ObjectListItem type="Active" title="{view>EAN}" number="{view>Netprice}" numberUnit="{view>Currency}" press="onLineItemPressed">
 				        <attributes>
-				            <ObjectAttribute text="{i18n>color}: {Colour}" id="color"/>
-				            <ObjectAttribute text="{i18n>size}: {Size}" id="size"/>
-				            <ObjectAttribute text="{Description}" id="odesc" visible="false"/>
-				            <ObjectAttribute text="{Style}" id="ostyle" visible="false"/>
+				            <ObjectAttribute text="{i18n>color}: {view>Colour}" id="color"/>
+				            <ObjectAttribute text="{i18n>size}: {view>Size}" id="size"/>
+				            <ObjectAttribute text="{view>Description}" id="odesc" visible="false"/>
+				            <ObjectAttribute text="{view>Style}" id="ostyle" visible="false"/>
 				        </attributes>
 				        <!--
 				        <firstStatus>
