@@ -43,7 +43,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox"], function (Contr
 				url: "i18n/i18n.properties",
 				locale: sLocale
 			});
-			this.msgInputErrAgain=oBundle.getText("msgInputErr", [sLocale])+"\n"+oBundle.getText("msgInputAgain", [sLocale]);
+			this.msgInputErrAgain = oBundle.getText("msgInputErr", [sLocale])+"\n"+oBundle.getText("msgInputAgain", [sLocale]);
         },
 		/**
 		 *@memberOf sap.m.PrintPOC.controller.Screen1View
@@ -55,7 +55,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox"], function (Contr
 				oParams["styleId"] = oInput.getValue();
 				this.getOwnerComponent().getRouter().navTo("Screen2View", oParams);
 			} else {
-				MessageBox.alert(this.msgInputErrAgain,{
+				MessageBox.alert(this.msgInputErrAgain, {
 									icon : MessageBox.Icon.ERROR,
 									title : "Error"
 							});

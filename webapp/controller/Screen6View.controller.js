@@ -7,29 +7,29 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var oRouter = this.getOwnerComponent().getRouter();
 			oRouter.getRoute("Screen6View")
 				.attachPatternMatched(this._onObjectMatched, this);
-			this.barcodes = [];
+			this.aBarcodes = [];
 		},
 
 		_onObjectMatched: function (oEvent) {
-			var barcodes = oEvent.getParameter("arguments").barcodes.split(',');
-			barcodes.forEach(function (e, i) {
-				if(!this.barcodes.includes(e)){
-					this.barcodes.push(e);
+			var aBarcodes = oEvent.getParameter("arguments").barcodes.split(',');
+			aBarcodes.forEach(function (e, i) {
+				if(!this.aBarcodes.includes(e)){
+					this.aBarcodes.push(e);
 				}
 			},this);
 			
-			var barcodesObject = [];
-			this.barcodes.forEach(function (e, i) {
-				barcodesObject.push({
+			var aBarcodesObject = [];
+			this.aBarcodes.forEach(function (e, i) {
+				aBarcodesObject.push({
 					Code: e
 				});
 			});
 
-			var listDataModel = new JSONModel();
-			listDataModel.setData({
-				listData: barcodesObject
+			var oListDataModel = new JSONModel();
+			oListDataModel.setData({
+				listData: aBarcodesObject
 			});
-			this.getView().setModel(listDataModel, "view");
+			this.getView().setModel(oListDataModel, "view");
 		},
 
 		onLineItemPressed: function (oEvent) {
@@ -51,7 +51,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 		
 		_clearList: function(that){
-			that.barcodes = [];
+			that.aBarcodes = [];
 		},
 
 		/**

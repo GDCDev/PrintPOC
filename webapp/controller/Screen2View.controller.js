@@ -29,7 +29,7 @@ sap.ui.define([
 				
 			
 				var sServiceUrl = "/EANSet?Style=" + query;
-				var listDataModel = new JSONModel();
+				var olistDataModel = new JSONModel();
 				var oView = this.getView();
 				$.ajax({
 					type : "GET",
@@ -38,10 +38,10 @@ sap.ui.define([
 					async : false,
 					success: function(data) {
 						
-						listDataModel.setData({
+						olistDataModel.setData({
 							listData: data
 						});
-						oView.setModel(listDataModel, "view");
+						oView.setModel(olistDataModel, "view");
 					},
 					error: function(err) {
 						MessageBox.alert(err,{
@@ -53,8 +53,6 @@ sap.ui.define([
 				
 			}
 		},
-		
-	
 		
 		onLineItemPressed: function (oEvent) {
 			this.getOwnerComponent().getRouter().navTo("Screen4View", {
@@ -122,9 +120,9 @@ sap.ui.define([
 		/**
 		 *@memberOf sap.m.PrintPOC.controller.Screen2View
 		 */
-		PrintEANList: function (oEvent) {
+		onPrintEANListPressed: function (oEvent) {
 			//setBlank
-			var setBlank = function (txt, nums, isLeft) {
+			var fnSetBlank = function (txt, nums, isLeft) {
 				if (txt.length >= nums) {
 					txt = txt.substring(0, nums);
 					return txt;
@@ -139,7 +137,7 @@ sap.ui.define([
 				return txt;
 			};
 			//getAfterColon
-			var getAfterColon = function (txt) {
+			var fnGetAfterColon = function (txt) {
 				var start = txt.indexOf(":");
 				if (start !== -1)
 					start += 2;
@@ -147,50 +145,52 @@ sap.ui.define([
 					start = txt.length;
 				return txt.substring(start);
 			};
-			var items = this.byId("poList").getItems();
-			var printPage = "";
+			var aItems = this.byId("poList").getItems();
+			var sPrintPage = "";
 			//for monospaced font
-			printPage += "<tt>";
-			var stylearr = this.getView().byId("style").getText().split(" - ");
-			if (stylearr.length < 2) {
-				if (!stylearr[0])
-					stylearr[0] = "";
-				stylearr[1] = "";
+			sPrintPage += "<tt>";
+			var aStylearr = this.getView().byId("style").getText().split(" - ");
+			if (aStylearr.length < 2) {
+				if (!aStylearr[0])
+					aStylearr[0] = "";
+				aStylearr[1] = "";
 			}
-			var curr = "EUR";
-			if (items.length > 0 && items[0].mProperties.Currency)
-				curr = items[0].mProperties.Currency;
-			printPage += stylearr[0];
+			var sCurr = "EUR";
+			if (aItems.length > 0 && aItems[0].mProperties.Currency) {
+				sCurr = aItems[0].mProperties.Currency;
+			}
+			sPrintPage += aStylearr[0];
 			//style
-			printPage += "<br/>";
-			printPage += stylearr[1] + "<br/>";
+			sPrintPage += "<br/>";
+			sPrintPage += aStylearr[1] + "<br/>";
 			//---->i18n
-			printPage += "<br/>";
-			printPage += "EAN             Color   Size      Price (" + curr + ")<br/>";
-			printPage += "=============   =====   ======      =========<br/>";
-			for (var i = 0; i < items.length; i++) {
-				var printLine = "";
-				printLine += setBlank(items[i].mProperties.title, 16);
-				printLine += setBlank(getAfterColon(items[i].mAggregations.attributes[0].mProperties.text), 8);
-				printLine += setBlank(getAfterColon(items[i].mAggregations.attributes[1].mProperties.text), 5);
-				printLine += setBlank(items[i].mProperties.number, 15, true);
-				printLine += "<br/>";
-				printPage += printLine;
+			sPrintPage += "<br/>";
+			sPrintPage += "EAN             Color   Size      Price (" + sCurr + ")<br/>";
+			sPrintPage += "=============   =====   ======      =========<br/>";
+			for (var i = 0; i < aItems.length; i++) {
+				var sPrintLine = "";
+				sPrintLine += fnSetBlank(aItems[i].mProperties.title, 16);
+				sPrintLine += fnSetBlank(fnGetAfterColon(aItems[i].mAggregations.attributes[0].mProperties.text), 8);
+				sPrintLine += fnSetBlank(fnGetAfterColon(aItems[i].mAggregations.attributes[1].mProperties.text), 5);
+				sPrintLine += fnSetBlank(aItems[i].mProperties.number, 15, true);
+				sPrintLine += "<br/>";
+				sPrintPage += sPrintLine;
 			}
 			//for monospaced font
-			printPage += "</tt>";
-			printPage = printPage.replace(/ /g, "&nbsp;");
-			var options = {
-				name: "StyleEANList"+stylearr[0],
+			sPrintPage += "</tt>";
+			sPrintPage = sPrintPage.replace(/ /g, "&nbsp;");
+			var oOptions = {
+				name: "StyleEANList" + aStylearr[0],
 				// + style
 				printerId: ""
 			};
 			if (cordova) {
-				cordova.plugins.printer.print(printPage, options, function (res) {
-					console.log(res ? "Done" : "Canceled");
+				cordova.plugins.printer.print(sPrintPage, oOptions, function (res) {
+					//console.log(res ? "Done" : "Canceled");
 				});
 			}
 		},
+		
 		/**
 		 *@memberOf sap.m.PrintPOC.controller.Screen2View
 		 */
@@ -204,14 +204,14 @@ sap.ui.define([
 			//	desc = firstObj.getProperty("/Description");
 			//}
 		
-			var items = this.byId("poList").getItems();
-			var styleCtrl = this.getView().byId("style");
-			if (items.length > 0) {
-				var desc = items[0].mAggregations.attributes[2].mProperties.text;
-				var query = items[0].mAggregations.attributes[3].mProperties.text;
-				styleCtrl.setText(query + " - " + desc); //styleCtrl.bindProperty("text", "/eanSet('xxxxx')/Style");
+			var aItems = this.byId("poList").getItems();
+			var oStyleCtrl = this.getView().byId("style");
+			if (aItems.length > 0) {
+				var sDesc = aItems[0].mAggregations.attributes[2].mProperties.text;
+				var sStyle = aItems[0].mAggregations.attributes[3].mProperties.text;
+				oStyleCtrl.setText(sStyle + " - " + sDesc); //styleCtrl.bindProperty("text", "/eanSet('xxxxx')/Style");
 			} else {
-				styleCtrl.setText(" - ");
+				oStyleCtrl.setText(" - ");
 			}
 		}
 	});

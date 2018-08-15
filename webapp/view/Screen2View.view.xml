@@ -5,11 +5,9 @@
 			<Page xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" title="{i18n>title}" showNavButton="true" navButtonPress="action" action:wiring="\{'navButtonPress':\{'navigation':\{'routeName':'Screen1View'\}\}\}">
 				<content>
 					
-					<VBox width="100%" direction="Column" id="vbox0">
-				        <items>
-				            <Label width="100%" id="style" class="labelStyle"/>
-				            
-				        </items>
+					<VBox width="100%" direction="Column" id="vbox0" wrap="Wrap">
+				       
+				         <Label width="100%" id="style" wrapping="true" displayOnly="true" class="labelStyle"/>
 				    </VBox>
 					
 					
@@ -35,7 +33,7 @@
 			<footer>
 			    <Bar class="sapContrast sapContrastPlus" id="bar0">
 			        <contentMiddle>
-			            <Button text="{i18n>printList}" width="100px" id="button0" type="Emphasized" press="PrintEANList"/>
+			            <Button text="{i18n>printList}" width="100px" id="button0" type="Emphasized" press="onPrintEANListPressed"/>
 			        </contentMiddle>
 			    </Bar>
 			</footer>

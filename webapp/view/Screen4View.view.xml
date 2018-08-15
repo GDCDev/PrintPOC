@@ -5,7 +5,7 @@
 			<footer>
 				    <Bar class="sapContrast sapContrastPlus" id="bar0">
 				        <contentMiddle>
-				            <Button text="{i18n>printLabel}" width="100px" id="button0" type="Emphasized" press="printLabel"/>
+				            <Button text="{i18n>printLabel}" width="100px" id="button0" type="Emphasized" press="onPrintLabelPressed"/>
 				        </contentMiddle>
 				    </Bar>
 				</footer>

@@ -7,30 +7,55 @@ sap.ui.define([
 	"use strict";
 
 	return Controller.extend("sap.m.PrintPOC.controller.Screen5View", {
-
+		
+		onInit: function(){
+                var oRouter = UIComponent.getRouterFor(this);
+                oRouter.getRoute("Screen5View")
+                    .attachPatternMatched(this._onAfterRendering, this);
+                
+                jQuery.sap.require("jquery.sap.resources");
+				var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
+				var oBundle = jQuery.sap.resources({
+					url: "i18n/i18n.properties",
+					locale: sLocale
+				});
+				this.msgScanErrAgain=oBundle.getText("msgScanErr", [sLocale])+"\n"+oBundle.getText("msgScanAgain", [sLocale]);
+				this.msgScanNew = oBundle.getText("msgScanNew", [sLocale]);
+            },
+            
+        _onAfterRendering: function (oEvent) {
+                this.barcodes=[];
+            	//only async call works even though 1ms
+	            var interval = jQuery.sap.intervalCall(5, this, function(){
+	            		if(cordova){
+	                    	this._scan(this);
+	            		}
+	                    jQuery.sap.clearIntervalCall(interval);
+	                });
+            },
 		//to check EAN13 format
-		_checkEAN13:function(txt){
-			if(!(/^[0-9]{13}$/.test(txt)))
+		_checkEAN13:function(sTxt){
+			if(!(/^[0-9]{13}$/.test(sTxt)))
 				return false;
-            var Code = txt.split("");
-            var A = 0;
-            var B = 0;
+            var aCode = sTxt.split("");
+            var iA = 0;
+            var iB = 0;
             for(var i=0;i<12;i++)
             {
                 if(i%2==1)
                 {
-                    A += parseInt(Code[i]);
+                    iA += parseInt(aCode[i]);
                 }
                 else
                 {
-                    B += parseInt(Code[i]);
+                    iB += parseInt(aCode[i]);
                 }  
             }
-            var C1 = B;
-            var C2 = A*3;
-            var CC = (C1+C2)%10;
-            var  CheckCode = (10 - CC)%10;
-            return  CheckCode+""==Code[12];
+            var iC1 = iB;
+            var iC2 = iA*3;
+            var iCC = (iC1+iC2)%10;
+            var  iCheckCode = (10 - iCC)%10;
+            return  iCheckCode+""==aCode[12];
 		},
 		
 		_scan: function(that){
@@ -39,7 +64,7 @@ sap.ui.define([
 					{
 						if(result.cancelled){
 							//test
-							that.barcodes.push("4060469458664");
+							//that.barcodes.push("4060469458664");
 							//navto 
 							if(that.barcodes.length==0)
 								that.getOwnerComponent().getRouter().navTo("Screen1View");
@@ -74,35 +99,7 @@ sap.ui.define([
 					}
 				);
 		},
-		
-		onInit: function(){
-                var oRouter = UIComponent.getRouterFor(this);
-                oRouter.getRoute("Screen5View")
-                    .attachPatternMatched(this._onAfterRendering, this);
-                
-                jQuery.sap.require("jquery.sap.resources");
-				var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
-				var oBundle = jQuery.sap.resources({
-					url: "i18n/i18n.properties",
-					locale: sLocale
-				});
-				this.msgScanErrAgain=oBundle.getText("msgScanErr", [sLocale])+"\n"+oBundle.getText("msgScanAgain", [sLocale]);
-				this.msgScanNew = oBundle.getText("msgScanNew", [sLocale]);
-            },
-            
-        _onAfterRendering: function (oEvent) {
-                this.barcodes=[];
-            	//only async call works even though 1ms
-	            var interval = jQuery.sap.intervalCall(5, this, function(){
-	            		if(cordova){
-	                    	this._scan(this);
-	            		}
-	                    jQuery.sap.clearIntervalCall(interval);
-	                });
-            },
-		/**
-		 *@memberOf sap.m.PrintPOC.controller.Screen3View
-		 */
+
 		action: function (oEvent) {
 			var that = this;
 			var actionParameters = JSON.parse(oEvent.getSource().data("wiring").replace(/'/g, "\""));

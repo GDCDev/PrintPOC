@@ -12,7 +12,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox",'sap/ui/model/jso
 			this._sEan = decodeURIComponent(oEvent.getParameter("arguments").ean);
 			
 			var sServiceUrl = "/EANSet?EAN=" + this._sEan;
-			var dataModel = new JSONModel();
+			var oDataModel = new JSONModel();
 			var oView = this.getView();
 			$.ajax({
 				type : "GET",
@@ -21,12 +21,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox",'sap/ui/model/jso
 				async : false,
 				success: function(data) {
 					if (data && data.length > 0){
-						dataModel.setData(data[0]);
-						oView.setModel(dataModel, "detail");
+						oDataModel.setData(data[0]);
+						oView.setModel(oDataModel, "detail");
 					}
 				},
 				error: function(err) {
-					MessageBox.alert(err,{
+					MessageBox.alert(err, {
 									icon : MessageBox.Icon.ERROR,
 									title : "Error"
 							});
@@ -89,22 +89,22 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox",'sap/ui/model/jso
 		
 		//more info for barcode
 		//https://github.com/lindell/JsBarcode/wiki/Options
-		printLabel: function (oEvent) {
-			var printPage = '<div style="width:230;height:161">\
-		{0}&nbsp;&nbsp;{1}&nbsp;&nbsp;&nbsp;<div style="float:right">{2}</div><br/>\
-		{3}&nbsp;&nbsp;{4}<br/>\
-		<svg class="barcode"\
-			jsbarcode-format="EAN13"\
-			jsbarcode-height="45"\
-			jsbarcode-width="2"\
-			jsbarcode-value="{5}"\
-			jsbarcode-textmargin="0"\
-			jsbarcode-fontoptions="bold">\
-		</svg><br/>\
-		{6}<div style="float:right">{7}</div>\
-	</div>';
+		onPrintLabelPressed: function (oEvent) {
+			var sPrintPage = '<div style="width:230;height:161">\
+					{0}&nbsp;&nbsp;{1}&nbsp;&nbsp;&nbsp;<div style="float:right">{2}</div><br/>\
+					{3}&nbsp;&nbsp;{4}<br/>\
+					<svg class="barcode"\
+						jsbarcode-format="EAN13"\
+						jsbarcode-height="45"\
+						jsbarcode-width="2"\
+						jsbarcode-value="{5}"\
+						jsbarcode-textmargin="0"\
+						jsbarcode-fontoptions="bold">\
+					</svg><br/>\
+					{6}<div style="float:right">{7}</div>\
+				</div>';
 	
-			printPage = printPage.replace(/\{0\}/g, this.byId("lblSeason").getValue())
+			sPrintPage = sPrintPage.replace(/\{0\}/g, this.byId("lblSeason").getValue())
 					.replace(/\{1\}/g, this.byId("lblDivision").getValue())
 					.replace(/\{2\}/g, this.byId("lblStyle").getValue())
 					.replace(/\{3\}/g, this.byId("lblColor").getValue())
@@ -113,18 +113,18 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox",'sap/ui/model/jso
 					.replace(/\{6\}/g, this.byId("lblCurrency").getValue())
 					.replace(/\{7\}/g, this.byId("inputNumber").getValue());
 
-			var options = {
+			var oOptions = {
 				name: 'EANDetail-'+this.byId("lblEAN").getValue(), // + EAN
 				printerId: ''
 			};
 			
-			document.getElementById('printContainer').innerHTML=printPage;
+			document.getElementById('printContainer').innerHTML = sPrintPage;
 			JsBarcode(".barcode").init();
 			
 			if(cordova){
-				cordova.plugins.printer.print(document.getElementById('printContainer'), options, function (res) {
-					document.getElementById('printContainer').innerHTML="";
-					console.log(res?"Done":"Canceled");
+				cordova.plugins.printer.print(document.getElementById('printContainer'), oOptions, function (res) {
+					document.getElementById('printContainer').innerHTML = "";
+					//console.log(res?"Done":"Canceled");
 				});
 			}
 		}
