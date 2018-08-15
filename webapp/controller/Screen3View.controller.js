@@ -6,14 +6,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/ui/core/UIComponent","sap/m/Mes
                 var oRouter = UIComponent.getRouterFor(this);
                 oRouter.getRoute("Screen3View")
                     .attachPatternMatched(this._onAfterRendering, this);
-                    
-                jQuery.sap.require("jquery.sap.resources");
-				var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
-				var oBundle = jQuery.sap.resources({
-					url: "i18n/i18n.properties",
-					locale: sLocale
-				});
-				this.msgScanErrAgain=oBundle.getText("msgScanErr", [sLocale])+"\n"+oBundle.getText("msgScanAgain", [sLocale]);
+                
+                var oComponent = sap.ui.component(sap.ui.core.Component.getOwnerIdFor(this.getView()));
+        		this._oResourceBundle = oComponent.getModel("i18n").getResourceBundle();
+        		this.msgScanErrAgain = this._oResourceBundle.getText("msgScanErr")+"\n" + this._oResourceBundle.getText("msgScanAgain");
+    //             jQuery.sap.require("jquery.sap.resources");
+				// var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
+				// var oBundle = jQuery.sap.resources({
+				// 	url: "i18n/i18n.properties",
+				// 	locale: sLocale
+				// });
+				// this.msgScanErrAgain=oBundle.getText("msgScanErr", [sLocale])+"\n"+oBundle.getText("msgScanAgain", [sLocale]);
             },
             
         _onAfterRendering: function (oEvent) {
@@ -58,7 +61,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/ui/core/UIComponent","sap/m/Mes
 							//navto Master
 							that.getOwnerComponent().getRouter().navTo("Screen1View");
 						}
-						else if(result.format!=="BAR_CODE"||!that._checkEAN13(result.text)){
+						else if(result.format!=="EAN_13"||!that._checkEAN13(result.text)){
 							//reScan
 							MessageBox.alert(that.msgScanErrAgain,{
 									icon : MessageBox.Icon.ERROR,
@@ -70,12 +73,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/ui/core/UIComponent","sap/m/Mes
 						}
 						else{
 							//navto screen4
-							that.getOwnerComponent().getRouter().navTo("Screen4View", {code:result.text});
+							//that.getOwnerComponent().getRouter().navTo("Screen4View", {ean: result.text}, false);
+							that.getOwnerComponent().getRouter().navTo("Screen4View", {
+								ean : result.text
+							}, false);
 						}
 					},
 					function (error) {
 						//reScan
-						MessageBox.alert(that.msgScanErrAgain,{
+						MessageBox.alert(error,{
 								icon : MessageBox.Icon.ERROR,
 								title : "Error",
 								onClose: function(oAction) {

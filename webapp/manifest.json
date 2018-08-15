@@ -80,6 +80,11 @@
 			}
 		},
 		"resources": {
+			"js": [
+				{
+					"uri": "utils/JsBarcode.ean-upc.min.js"
+				}
+			],
 			"css": [
 				{
 					"uri": "css/style.css"

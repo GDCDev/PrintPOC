@@ -1,105 +1,98 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-"sap/ui/core/UIComponent",
-"sap/m/MessageBox",
-"sap/m/MessageToast"
-], function (Controller,UIComponent,MessageBox,MessageToast) {
+	"sap/ui/core/UIComponent",
+	"sap/m/MessageBox",
+	"sap/m/MessageToast"
+], function (Controller, UIComponent, MessageBox, MessageToast) {
 	"use strict";
-
 	return Controller.extend("sap.m.PrintPOC.controller.Screen5View", {
-		
-		onInit: function(){
-                var oRouter = UIComponent.getRouterFor(this);
-                oRouter.getRoute("Screen5View")
-                    .attachPatternMatched(this._onAfterRendering, this);
-                
-                jQuery.sap.require("jquery.sap.resources");
-				var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
-				var oBundle = jQuery.sap.resources({
-					url: "i18n/i18n.properties",
-					locale: sLocale
-				});
-				this.msgScanErrAgain=oBundle.getText("msgScanErr", [sLocale])+"\n"+oBundle.getText("msgScanAgain", [sLocale]);
-				this.msgScanNew = oBundle.getText("msgScanNew", [sLocale]);
-            },
-            
-        _onAfterRendering: function (oEvent) {
-                this.barcodes=[];
-            	//only async call works even though 1ms
-	            var interval = jQuery.sap.intervalCall(5, this, function(){
-	            		if(cordova){
-	                    	this._scan(this);
-	            		}
-	                    jQuery.sap.clearIntervalCall(interval);
-	                });
-            },
+		onInit: function () {
+			var oRouter = UIComponent.getRouterFor(this);
+			oRouter.getRoute("Screen5View").attachPatternMatched(this._onAfterRendering, this);
+			var oComponent = sap.ui.component(sap.ui.core.Component.getOwnerIdFor(this.getView()));
+			this._oResourceBundle = oComponent.getModel("i18n").getResourceBundle();
+			this.msgScanErrAgain = this._oResourceBundle.getText("msgScanErr") + "\n" + this._oResourceBundle.getText("msgScanAgain");
+			this.msgScanNew = this._oResourceBundle.getText("msgScanNew"); //             jQuery.sap.require("jquery.sap.resources");
+			// var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
+			// var oBundle = jQuery.sap.resources({
+			// 	url: "i18n/i18n.properties",
+			// 	locale: sLocale
+			// });
+			// this.msgScanErrAgain=oBundle.getText("msgScanErr", [sLocale])+"\n"+oBundle.getText("msgScanAgain", [sLocale]);
+			// this.msgScanNew = oBundle.getText("msgScanNew", [sLocale]);
+		},
+		_onAfterRendering: function (oEvent) {
+			this.barcodes = [];
+			//only async call works even though 1ms
+			var interval = jQuery.sap.intervalCall(5, this, function () {
+				if (cordova) {
+					this._scan(this);
+				}
+				jQuery.sap.clearIntervalCall(interval);
+			});
+		},
 		//to check EAN13 format
-		_checkEAN13:function(sTxt){
-			if(!(/^[0-9]{13}$/.test(sTxt)))
+		_checkEAN13: function (sTxt) {
+			if (!/^[0-9]{13}$/.test(sTxt))
 				return false;
-            var aCode = sTxt.split("");
-            var iA = 0;
-            var iB = 0;
-            for(var i=0;i<12;i++)
-            {
-                if(i%2==1)
-                {
-                    iA += parseInt(aCode[i]);
-                }
-                else
-                {
-                    iB += parseInt(aCode[i]);
-                }  
-            }
-            var iC1 = iB;
-            var iC2 = iA*3;
-            var iCC = (iC1+iC2)%10;
-            var  iCheckCode = (10 - iCC)%10;
-            return  iCheckCode+""==aCode[12];
+			var aCode = sTxt.split("");
+			var iA = 0;
+			var iB = 0;
+			for (var i = 0; i < 12; i++) {
+				if (i % 2 == 1) {
+					iA += parseInt(aCode[i]);
+				} else {
+					iB += parseInt(aCode[i]);
+				}
+			}
+			var iC1 = iB;
+			var iC2 = iA * 3;
+			var iCC = (iC1 + iC2) % 10;
+			var iCheckCode = (10 - iCC) % 10;
+			return iCheckCode + "" == aCode[12];
 		},
-		
-		_scan: function(that){
-			cordova.plugins.barcodeScanner.scan(
-					function (result) 
-					{
-						if(result.cancelled){
-							//test
-							//that.barcodes.push("4060469458664");
-							//navto 
-							if(that.barcodes.length==0)
-								that.getOwnerComponent().getRouter().navTo("Screen1View");
-							else
-								that.getOwnerComponent().getRouter().navTo("Screen6View", {barcodes:that.barcodes.join()});
+		_scan: function (that) {
+			cordova.plugins.barcodeScanner.scan(function (result) {
+				if (result.cancelled) {
+					//test
+					//that.barcodes.push("4060469458664");
+					//navto 
+					if (that.barcodes.length == 0)
+						that.getOwnerComponent().getRouter().navTo("Screen1View");
+					else
+						that.getOwnerComponent().getRouter().navTo("Screen6View", {
+							barcodes: that.barcodes.join()
+						}, false);
+				} else if (result.format !== "EAN_13" || !that._checkEAN13(result.text)) {
+					//reScan
+					MessageBox.alert(that.msgScanErrAgain, {
+						icon: MessageBox.Icon.ERROR,
+						title: "Error",
+						onClose: function (oAction) {
+							that._scan(that);
 						}
-						else if(result.format!=="BAR_CODE"||!that._checkEAN13(result.text)){
-							//reScan
-							MessageBox.alert(that.msgScanErrAgain,{
-									icon : MessageBox.Icon.ERROR,
-									title : "Error",
-									onClose: function(oAction) {
-										that._scan(that);
-								}
-							});
+					});
+				} else {
+					if (!that.barcodes.includes(result.text))
+						that.barcodes.push(result.text);
+					MessageToast.show(that.msgScanNew + result.text, {
+						duration: 500,
+						onClose: function (oAction) {
+							that._scan(that);
 						}
-						else{
-							if(!that.barcodes.contains(result.text))
-								that.barcodes.push(result.text);
-							MessageToast.show(that.msgScanNew+"\n"+result.text,{duration: 2000});
-						}
-					},
-					function (error) {
-						//reScan
-						MessageBox.alert(that.msgScanErrAgain,{
-								icon : MessageBox.Icon.ERROR,
-								title : "Error",
-								onClose: function(oAction) {
-									that._scan(that);
-							}
-						});
+					});
+				}
+			}, function (error) {
+				//reScan
+				MessageBox.alert(error, {
+					icon: MessageBox.Icon.ERROR,
+					title: "Error",
+					onClose: function (oAction) {
+						that._scan(that);
 					}
-				);
+				});
+			});
 		},
-
 		action: function (oEvent) {
 			var that = this;
 			var actionParameters = JSON.parse(oEvent.getSource().data("wiring").replace(/'/g, "\""));
@@ -130,8 +123,15 @@ sap.ui.define([
 					this.getOwnerComponent().getRouter().navTo(oNavigation.routeName);
 				}
 			}
+		},
+		
+		onCancelPress: function (oEvent) {
+			if (this.barcodes.length == 0)
+						this.getOwnerComponent().getRouter().navTo("Screen1View");
+					else
+						this.getOwnerComponent().getRouter().navTo("Screen6View", {
+							barcodes: this.barcodes.join()
+						}, false);
 		}
-
 	});
-
 });

@@ -7,7 +7,7 @@
 					
 					<VBox width="100%" direction="Column" id="vbox0" wrap="Wrap">
 				       
-				         <Label width="100%" id="style" wrapping="true" displayOnly="true" class="labelStyle"/>
+				         <Label width="100%" id="style" wrapping="true" class="labelStyle"/>
 				    </VBox>
 					
 					

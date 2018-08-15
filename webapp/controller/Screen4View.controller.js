@@ -23,10 +23,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox",'sap/ui/model/jso
 					if (data && data.length > 0){
 						oDataModel.setData(data[0]);
 						oView.setModel(oDataModel, "detail");
+					} else {
+						oDataModel.setData({});
+						oView.setModel(oDataModel, "detail");
 					}
 				},
 				error: function(err) {
-					MessageBox.alert(err, {
+					MessageBox.alert(err.status + " - " + err.statusText, {
 									icon : MessageBox.Icon.ERROR,
 									title : "Error"
 							});
@@ -113,14 +116,22 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox",'sap/ui/model/jso
 					.replace(/\{6\}/g, this.byId("lblCurrency").getValue())
 					.replace(/\{7\}/g, this.byId("inputNumber").getValue());
 
-			var oOptions = {
-				name: 'EANDetail-'+this.byId("lblEAN").getValue(), // + EAN
-				printerId: ''
-			};
+			
+			
+			if(document.getElementById('printContainer')==null){
+		        var oBody = document.getElementsByTagName('body')[0];
+		        var oDiv = document.createElement('div');
+		        oDiv.id='printContainer';
+		        oBody.appendChild(oDiv);
+			} 
 			
 			document.getElementById('printContainer').innerHTML = sPrintPage;
 			JsBarcode(".barcode").init();
 			
+			var oOptions = {
+				name: 'EANDetail-'+this.byId("lblEAN").getValue(), // + EAN
+				printerId: ''
+			};
 			if(cordova){
 				cordova.plugins.printer.print(document.getElementById('printContainer'), oOptions, function (res) {
 					document.getElementById('printContainer').innerHTML = "";

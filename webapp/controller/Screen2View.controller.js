@@ -44,7 +44,7 @@ sap.ui.define([
 						oView.setModel(olistDataModel, "view");
 					},
 					error: function(err) {
-						MessageBox.alert(err,{
+						MessageBox.alert(err.status + " - " + err.statusText,{
 									icon : MessageBox.Icon.ERROR,
 									title : "Error"
 							});
