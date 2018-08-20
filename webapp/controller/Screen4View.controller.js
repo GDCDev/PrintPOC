@@ -11,7 +11,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller","sap/m/MessageBox",'sap/ui/model/jso
 		_onRouteMatched: function(oEvent) {
 			this._sEan = decodeURIComponent(oEvent.getParameter("arguments").ean);
 			
-			var sServiceUrl = "/EANSet?EAN=" + this._sEan;
+			var sServiceUrl = "/jsonSet/EANSet?EAN=" + this._sEan;
 			var oDataModel = new JSONModel();
 			var oView = this.getView();
 			$.ajax({

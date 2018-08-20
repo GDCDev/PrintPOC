@@ -13,16 +13,7 @@
 			"id": "servicecatalog.connectivityComponentForManifest",
 			"version": "0.0.0"
 		},
-		"dataSources": {
-			"jsonSet": {
-				"uri": "/EANSet/",
-				"type": "OData",
-				"settings": {
-					"odataVersion": "4.0",
-					"localUri": "localService/metadata.xml"
-				}
-			}
-		}
+		"dataSources": {}
 	},
 	"sap.ui": {
 		"technology": "UI5",
@@ -39,10 +30,7 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": [
-			"sap_hcb",
-			"sap_belize"
-		]
+		"supportedThemes": ["sap_hcb", "sap_belize"]
 	},
 	"sap.ui5": {
 		"rootView": {
@@ -67,29 +55,16 @@
 				"settings": {
 					"bundleName": "sap.m.PrintPOC.i18n.i18n"
 				}
-			},
-			"": {
-				"type": "sap.ui.model.odata.v4.ODataModel",
-				"settings": {
-					"operationMode": "Server",
-					"synchronizationMode": "None",
-					"groupId": "$direct"
-				},
-				"dataSource": "jsonSet",
-				"preload": true
 			}
+			
 		},
 		"resources": {
-			"js": [
-				{
-					"uri": "utils/JsBarcode.ean-upc.min.js"
-				}
-			],
-			"css": [
-				{
-					"uri": "css/style.css"
-				}
-			]
+			"js": [{
+				"uri": "utils/JsBarcode.ean-upc.min.js"
+			}],
+			"css": [{
+				"uri": "css/style.css"
+			}]
 		},
 		"routing": {
 			"config": {
@@ -101,57 +76,35 @@
 				"controlId": "idAppControl",
 				"clearControlAggregation": false
 			},
-			"routes": [
-				{
-					"name": "RouteScreen1View",
-					"pattern": "RouteScreen1View",
-					"target": [
-						"TargetScreen1View"
-					]
-				},
-				{
-					"name": "Screen3View",
-					"pattern": "Screen3View",
-					"target": [
-						"Screen3View"
-					]
-				},
-				{
-					"name": "Screen1View",
-					"pattern": "Screen1View",
-					"target": [
-						"TargetScreen1View"
-					]
-				},
-				{
-					"name": "Screen2View",
-					"pattern": "Screen2View/:styleId:",
-					"target": [
-						"Screen2View"
-					]
-				},
-				{
-					"name": "Screen4View",
-					"pattern": "Screen4View/{ean}",
-					"target": [
-						"Screen4View"
-					]
-				},
-				{
-					"name": "Screen6View",
-					"pattern": "Screen6View/:barcodes:",
-					"target": [
-						"Screen6View"
-					]
-				},
-				{
-					"name": "Screen5View",
-					"pattern": "Screen5View",
-					"target": [
-						"Screen5View"
-					]
-				}
-			],
+			"routes": [{
+				"name": "RouteScreen1View",
+				"pattern": "RouteScreen1View",
+				"target": ["TargetScreen1View"]
+			}, {
+				"name": "Screen3View",
+				"pattern": "Screen3View",
+				"target": ["Screen3View"]
+			}, {
+				"name": "Screen1View",
+				"pattern": "Screen1View",
+				"target": ["TargetScreen1View"]
+			}, {
+				"name": "Screen2View",
+				"pattern": "Screen2View/:styleId:",
+				"target": ["Screen2View"]
+			}, {
+				"name": "Screen4View",
+				"pattern": "Screen4View/{ean}",
+				"target": ["Screen4View"]
+			}, {
+				"name": "Screen6View",
+				"pattern": "Screen6View/:barcodes:",
+				"target": ["Screen6View"]
+			}, {
+				"name": "Screen5View",
+				"pattern": "Screen5View",
+				"target": ["Screen5View"]
+			}],
 			"targets": {
 				"TargetScreen1View": {
 					"viewType": "XML",

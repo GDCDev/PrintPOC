@@ -28,7 +28,7 @@ sap.ui.define([
 				//binding.filter(filters);
 				
 			
-				var sServiceUrl = "/EANSet?Style=" + query;
+				var sServiceUrl = "/jsonSet/EANSet?Style=" + query;
 				var olistDataModel = new JSONModel();
 				var oView = this.getView();
 				$.ajax({
